@@ -79,7 +79,7 @@ def main(args):
     # set up evaluator
     det_eval, output_file = None, None
     val_db_vars = val_dataset.get_attributes()
-    if cfg['dataset_name'].lower() in ['lavdf','lavdfv2','tvil','psynd','tvilnotnone','psyndnotnone']:
+    if cfg['dataset_name'].lower() in ['lavdf','lavdfv2','tvil','psynd','tvilnotnone','psyndnotnone','lavdf_videomae']:
         output_file = os.path.join(os.path.split(ckpt_file)[0], 'test_results.json')
     elif not args.saveonly:
         # val_db_vars = val_dataset.get_attributes()

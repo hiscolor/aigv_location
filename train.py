@@ -82,7 +82,7 @@ def main(args):
         val_loader = make_data_loader(
             val_dataset, False, None,1, cfg['loader']['num_workers'])
         val_db_vars = val_dataset.get_attributes()
-        if cfg['dataset_name'].lower() in ['lavdf','lavdfv2','vil','psynd','vilnotnone','lavdfvm','psyndnotnone']:
+        if cfg['dataset_name'].lower() in ['lavdf','lavdfv2','vil','psynd','vilnotnone','lavdfvm','psyndnotnone','lavdf_videomae']:
             output_file = os.path.join(ckpt_folder, 'val_results.json')
         else:
             # val_db_vars = val_dataset.get_attributes()

@@ -4,6 +4,7 @@ from .models import make_backbone, make_neck, make_meta_arch, make_generator
 from . import backbones      # backbones
 from . import necks          # necks
 from . import loc_generators # location generators
+from . import meta_archs     # LocPointTransformer (clean baseline)
 from . import av_meta_arch
 from . import av_recoverynonorm_meta_arch
 
