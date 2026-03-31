@@ -137,6 +137,9 @@ class LAVDFVideoMAEDataset(Dataset):
         return len(self.data_list)
 
     def __getitem__(self, idx):
+        return self._get_item_safe(idx)
+
+    def _get_item_safe(self, idx):
         video_item = self.data_list[idx]
 
         filename = os.path.join(
@@ -193,8 +196,12 @@ class LAVDFVideoMAEDataset(Dataset):
                     if ratio >= self.trunc_thresh:
                         valid_seg_list.append(seg.clamp(max=vid_len))
                         valid_label_list.append(label.view(1))
-                segments = torch.stack(valid_seg_list, dim=0)
-                labels = torch.cat(valid_label_list)
+                if len(valid_seg_list) > 0:
+                    segments = torch.stack(valid_seg_list, dim=0)
+                    labels = torch.cat(valid_label_list)
+                else:
+                    segments = None
+                    labels = None
         else:
             segments, labels = None, None
 
@@ -214,5 +221,8 @@ class LAVDFVideoMAEDataset(Dataset):
                 data_dict, self.max_seq_len, self.trunc_thresh,
                 feat_offset, self.crop_ratio
             )
+
+        if self.is_training and data_dict['segments'] is None:
+            return self._get_item_safe((idx + 1) % len(self.data_list))
 
         return data_dict
